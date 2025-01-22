@@ -1,118 +1,76 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import { SafeAreaView, ScrollView, Text, View, Image, StyleSheet, useColorScheme } from 'react-native';
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const colorScheme = useColorScheme();
+  const dynamicStyles = colorScheme === 'dark' ? darkModeStyles : lightModeStyles;
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <SafeAreaView style={[styles.safeArea, dynamicStyles.safeArea]}>
+      <ScrollView style={[styles.scrollView, dynamicStyles.scrollView]}>
+        <View style={[styles.nav, dynamicStyles.nav]}>
+            <Text style={[styles.text, dynamicStyles.text]}>Navigation Panel</Text>
+        </View>
+        <View>
+          <Image
+            style={styles.banner}
+            source={require('./src/assets/Banner.gif')}
+          />
+          <Text style={[styles.text, dynamicStyles.text]}>Change Cover</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
+const lightModeStyles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: '#FFF',
+  },
+  nav: {
+      backgroundColor: '#FFF',
+      padding: 10,
+  },
+  scrollView: {
+    backgroundColor: '#FFF',
+  },
+  text: {
+    color: '#000',
+  },
+});
+
+const darkModeStyles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: '#000',
+  },
+  nav: {
+      backgroundColor: '#000',
+      padding: 10,
+  },
+  scrollView: {
+    backgroundColor: '#000',
+  },
+  text: {
+    color: '#FFF',
+  },
+});
+
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  safeArea: {
+    flex: 1,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  scrollView: {
+    flex: 1,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  banner: {
+    width: '100%',
+    height: 250,
   },
-  highlight: {
-    fontWeight: '700',
-  },
+  nav: {
+    height: 55,
+    flex: 1,
+    justifyContent: 'center',
+  }
 });
 
 export default App;
